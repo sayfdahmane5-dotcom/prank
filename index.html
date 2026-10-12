@@ -1,28 +1,197 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>System Access</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYSTEM SECURITY WARNING</title>
     <style>
-        body {
-            background-color: black;
-            color: #00FF00;
-            font-family: monospace;
-            padding: 20px;
-            text-align: center;
-            margin-top: 50px;
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
-        h1 { color: #ff0000; }
+        body {
+            background-color: #050505;
+            color: #00ff66;
+            font-family: 'Courier New', Courier, monospace;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            opacity: 0.25;
+        }
+        .container {
+            position: relative;
+            z-index: 2;
+            width: 90%;
+            max-width: 500px;
+            background: rgba(0, 10, 0, 0.85);
+            border: 2px solid #00ff66;
+            box-shadow: 0 0 20px rgba(0, 255, 102, 0.4);
+            border-radius: 10px;
+            padding: 25px;
+            text-align: center;
+        }
+        .warning-title {
+            color: #ff3333;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-shadow: 0 0 8px #ff0000;
+            animation: blink 1s infinite;
+        }
+        @keyframes blink {
+            50% { opacity: 0.3; }
+        }
+        .console-log {
+            height: 140px;
+            background: #000;
+            border: 1px solid #005511;
+            padding: 10px;
+            font-size: 13px;
+            text-align: left;
+            direction: ltr;
+            overflow-y: auto;
+            color: #00ff66;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        .progress-box {
+            width: 100%;
+            background: #111;
+            border: 1px solid #00ff66;
+            border-radius: 15px;
+            overflow: hidden;
+            height: 22px;
+            margin-bottom: 10px;
+        }
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #009933, #00ff66);
+            transition: width 0.3s;
+        }
+        .status-text {
+            font-size: 14px;
+            color: #fff;
+            margin-bottom: 15px;
+        }
+        .prank-result {
+            display: none;
+            animation: fadeIn 1.5s forwards;
+        }
+        .prank-result h1 {
+            color: #00ff66;
+            font-size: 26px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px #00ff66;
+        }
+        .prank-result p {
+            color: #ffffff;
+            font-size: 18px;
+            line-height: 1.6;
+        }
     </style>
 </head>
 <body>
-    <h1>[!] INITIALIZING SYSTEM BREACH...</h1>
-    <p>Connecting to target device and extracting data...</p>
-    
+
+    <canvas id="matrix"></canvas>
+
+    <div class="container">
+        <div id="hacker-ui">
+            <div class="warning-title">⚠️ WARNING: UNAUTHORIZED ACCESS ⚠️</div>
+            <div class="console-log" id="log"></div>
+            <div class="progress-box">
+                <div class="progress-bar" id="bar"></div>
+            </div>
+            <div class="status-text" id="status">جاري فحص واجهة النظام واستخراج البيانات... 0%</div>
+        </div>
+
+        <div class="prank-result" id="prank-ui">
+            <h1>😉 تعيش وتأكل غيرها!</h1>
+            <p>مقلب خفيف من <b>مروان</b>!<br>هاتفك في أمان تام ولا توجد أي عملية اختراق.</p>
+        </div>
+    </div>
+
     <script>
-        setTimeout(() => {
-            document.body.innerHTML = "<h1>[+] ACCESS GRANTED</h1><p style='font-size: 24px; color: #00ff00;'>مرحباً بك في مقلب مروان يا صديقي! الجهاز في أمان تام 😉</p>";
-        }, 4000);
+        // Matrix Canvas Effect
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const chars = '0123456789ABCDEF';
+        const fontSize = 14;
+        const columns = canvas.width / fontSize;
+        const drops = Array(Math.floor(columns)).fill(1);
+
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#00ff66';
+            ctx.font = fontSize + 'px monospace';
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = chars[Math.floor(Math.random() * chars.length)];
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+        setInterval(drawMatrix, 33);
+
+        // Simulation Script
+        const logBox = document.getElementById('log');
+        const bar = document.getElementById('bar');
+        const statusText = document.getElementById('status');
+        const hackerUi = document.getElementById('hacker-ui');
+        const prankUi = document.getElementById('prank-ui');
+
+        const logs = [
+            "> Connecting to gateway...",
+            "> IP Address identified: 192.168.1.104",
+            "> Bypassing device firewall...",
+            "> Accessing personal gallery & WhatsApp...",
+            "> Extracting saved passwords...",
+            "> Downloading camera stream...",
+            "> Finalizing system exploit..."
+        ];
+
+        let progress = 0;
+        let logIndex = 0;
+
+        const interval = setInterval(() => {
+            progress += Math.floor(Math.random() * 8) + 3;
+            if (progress > 100) progress = 100;
+
+            bar.style.width = progress + '%';
+            statusText.innerText = `جاري استخراج البيانات وتحليل الثغرة... ${progress}%`;
+
+            if (logIndex < logs.length && progress > (logIndex + 1) * 14) {
+                logBox.innerHTML += logs[logIndex] + "<br>";
+                logBox.scrollTop = logBox.scrollHeight;
+                logIndex++;
+            }
+
+            if (progress >= 100) {
+                clearInterval(interval);
+                setTimeout(() => {
+                    hackerUi.style.display = 'none';
+                    prankUi.style.display = 'block';
+                }, 1000);
+            }
+        }, 400);
     </script>
 </body>
 </html>
